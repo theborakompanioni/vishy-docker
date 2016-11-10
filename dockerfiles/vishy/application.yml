@@ -1,0 +1,30 @@
+spring.profiles.active: production
+
+app.name: vishy-demo
+app.description: a simple openmrc demo server
+
+management.context-path: /actuator
+
+# LOGGING
+logging.path: ./var/log
+logging.file: application.log
+logging.config: classpath:logback.xml
+logging.level.org.springframework: INFO
+
+vishy.metrics:
+  enabled: true
+  console: true
+
+vishy.kafka:
+  enabled: true
+  brokers: ${KAFKA_HOST}:${KAFKA_PORT}
+
+vishy.influxdb:
+  enabled: true
+  host: ${INFLUXDB_HOST}
+  port: ${INFLUXDB_PORT}
+  database: ${INFLUXDB_NAME}
+  username: ${INFLUXDB_USER}
+  password: ${INFLUXDB_PASS}
+  skip-idle-metrics: true
+  interval-in-seconds: 10

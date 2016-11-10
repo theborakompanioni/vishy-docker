@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  grafana:
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker-data/tick-stuff/grafana/:/var/lib/grafana:z
+      - ./docker-data/tick-stuff/grafana/log:/var/log/grafana
+
+
+  influxdb:
+    restart: unless-stopped
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - ./docker-data/tick-stuff/influxdb:/var/lib/influxdb:z
