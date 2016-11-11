@@ -9,7 +9,6 @@ services:
       - ./docker-data/tick-stuff/grafana/:/var/lib/grafana:z
       - ./docker-data/tick-stuff/grafana/log:/var/log/grafana
 
-
   influxdb:
     restart: unless-stopped
     ports:
@@ -17,3 +16,12 @@ services:
       - "8086:8086"
     volumes:
       - ./docker-data/tick-stuff/influxdb:/var/lib/influxdb:z
+
+  chronograf:
+    restart: unless-stopped
+    ports:
+      - "10000:10000"
+    environment:
+      CHRONOGRAF_LOCAL_DATABASE: "/docker-data/chronograf.db"
+    volumes:
+      - ./docker-data/tick-stuff/chronograf:/docker-data:rw

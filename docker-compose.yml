@@ -30,6 +30,15 @@ services:
     networks:
       - vishy-metrics
 
+  chronograf:
+    extends:
+      file: docker-compose-tick-common.yml
+      service: chronograf
+    container_name: vishy-chronograf1
+    build: dockerfiles/chronograf
+    networks:
+      - vishy-metrics
+
   grafana:
     extends:
       file: docker-compose-tick-common.yml
