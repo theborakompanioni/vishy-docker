@@ -5,21 +5,35 @@ networks:
     driver: bridge
   vishy-kafka:
     driver: bridge
+  vishy-postgres:
+    driver: bridge
 
 services:
 
-  ## cadvisor: resource usage and performance of containers
-  cadvisor:
-    container_name: vishy-cadvisor1
-    image: google/cadvisor:latest
+  vishy:
+    container_name: vishy-server1
+    build: dockerfiles/vishy
     restart: unless-stopped
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
     ports:
-      - "8082:8080"
+      - "8080:8080"
+    links:
+      - influxdb:influxdb
+      - kafka:kafka
+    volumes:
+      - /var/log:/var/log
+    networks:
+      - vishy-metrics
+      - vishy-kafka
+      - vishy-postgres
+    environment:
+      INFLUXDB_HOST: "influxdb"
+      INFLUXDB_PORT: "8086"
+      INFLUXDB_NAME: "vishy"
+      INFLUXDB_USER: "root"
+      INFLUXDB_PASS: "root"
+      KAFKA_HOST: "kafka"
+      KAFKA_PORT: "9092"
+
 
   influxdb:
     extends:
@@ -47,37 +61,40 @@ services:
     build: dockerfiles/grafana
     depends_on:
       - influxdb
+      - postgres
     links:
       - influxdb:influxdb
+      - postgres:postgres
     networks:
+      - vishy-postgres
       - vishy-metrics
 
-  vishy:
-    container_name: vishy-server1
-    build: dockerfiles/vishy
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
+
+  pgadmin:
+    extends:
+      file: docker-compose-postgres-common.yml
+      service: pgadmin
+    container_name: vishy-pgadmin1
+    depends_on:
+      - postgres
     links:
-      - influxdb:influxdb
-      - kafka:kafka
-    volumes:
-      - /var/log:/var/log
+      - postgres:postgres
     networks:
-      - vishy-metrics
-      - vishy-kafka
-    environment:
-      INFLUXDB_HOST: "influxdb"
-      INFLUXDB_PORT: "8086"
-      INFLUXDB_NAME: "vishy"
-      INFLUXDB_USER: "root"
-      INFLUXDB_PASS: "root"
-      KAFKA_HOST: "kafka"
-      KAFKA_PORT: "9092"
+      - vishy-postgres
+
+  postgres:
+    extends:
+      file: docker-compose-postgres-common.yml
+      service: postgres
+    container_name: vishy-postgres1
+    networks:
+      - vishy-postgres
+
 
   zookeeper:
     container_name: vishy-zookeeper1
     image: wurstmeister/zookeeper
+    restart: unless-stopped
     ports:
       - "2181:2181"
     networks:
@@ -86,6 +103,7 @@ services:
   kafka:
     container_name: vishy-kafka1
     image: wurstmeister/kafka:0.10.1.0
+    restart: unless-stopped
     ports:
       - "9092:9092"
     environment:
@@ -96,3 +114,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - vishy-kafka
+
+
+  ## cadvisor: resource usage and performance of containers
+  cadvisor:
+    container_name: vishy-cadvisor1
+    image: google/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8082:8080"
