@@ -28,3 +28,14 @@ vishy.influxdb:
   password: ${INFLUXDB_PASS}
   skip-idle-metrics: true
   interval-in-seconds: 10
+
+vishy.segmentio:
+  enabled: false
+  write-key: my_segmentio_write_key
+
+vishy.keenio:
+  enabled: false
+  project-id: my_keenio_project_id
+  read-key: my_keenio_read_key
+  write-key: my_keenio_write_key
+
