@@ -1,5 +1,7 @@
 FROM theborakompanioni/vishy:master
-#FROM tbk/vishy-server-web # local development maven docker image
+# local development maven docker image
+#FROM tbk/vishy-server-web
 MAINTAINER Thebora Kompanioni
 
-ADD ./application.yml application.yml
+COPY ./application.yml application.yml
+#COPY ./postgresql-9.4.1211.jar /opt/app/lib/postgresql.jar

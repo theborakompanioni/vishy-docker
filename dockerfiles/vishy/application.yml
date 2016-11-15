@@ -3,6 +3,11 @@ spring.profiles.active: production
 app.name: vishy-demo
 app.description: a simple openmrc demo server
 
+server.port: 8080
+server.use-forward-headers: true
+server.compression.enabled: true
+
+management.port: 9001
 management.context-path: /actuator
 
 # LOGGING
@@ -28,6 +33,14 @@ vishy.influxdb:
   password: ${INFLUXDB_PASS}
   skip-idle-metrics: true
   interval-in-seconds: 10
+
+vishy.jdbc:
+  enabled: false
+  jdbcUrl: ${POSTGRES_URL}
+  username: ${POSTGRES_USER}
+  password: ${POSTGRES_PASS}
+  driverClassName: org.postgresql.Driver
+  tableName: vishy_openmrc_request_test_table
 
 vishy.segmentio:
   enabled: false
