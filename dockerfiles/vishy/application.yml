@@ -10,6 +10,14 @@ server.compression.enabled: true
 management.port: 9001
 management.context-path: /actuator
 
+# enable spring-boot admin ui client
+# @see https://github.com/codecentric/spring-boot-admin
+spring.boot.admin.url: http://vishyadmin:8080
+spring.boot.admin.client.enabled: true
+spring.boot.admin.client.name: vishy-demo
+spring.boot.admin.client.service-url: http://vishy:8080
+spring.boot.admin.client.management-url: http://vishy:9001/actuator
+
 # LOGGING
 logging.path: ./var/log
 logging.file: application.log

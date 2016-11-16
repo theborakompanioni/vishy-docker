@@ -7,6 +7,8 @@ networks:
     driver: bridge
   vishy-postgres:
     driver: bridge
+  vishy-admin:
+    driver: bridge
 
 services:
 
@@ -23,10 +25,15 @@ services:
       - postgres:postgres
     volumes:
       - /var/log:/var/log
+    depends_on:
+      - vishyadmin
     networks:
-      - vishy-metrics
-      - vishy-kafka
-      - vishy-postgres
+      vishy-admin:
+        aliases:
+          - vishy
+      vishy-metrics:
+      vishy-kafka:
+      vishy-postgres:
     environment:
       INFLUXDB_HOST: "influxdb"
       INFLUXDB_PORT: "8086"
@@ -38,6 +45,17 @@ services:
       POSTGRES_URL: jdbc:postgresql://postgres:5432/db
       POSTGRES_PASS: mysupersecretpassword
       POSTGRES_USER: dbadmin
+
+  vishyadmin:
+    container_name: vishy-admin1
+    image: aetas/spring-boot-admin-docker:1.4.1
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    networks:
+      vishy-admin:
+        aliases:
+          - vishyadmin
 
 
   influxdb:

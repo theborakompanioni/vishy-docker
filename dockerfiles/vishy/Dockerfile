@@ -1,4 +1,4 @@
-FROM theborakompanioni/vishy:master
+FROM theborakompanioni/vishy:latest
 MAINTAINER Thebora Kompanioni
 
 COPY ./application.yml application.yml
