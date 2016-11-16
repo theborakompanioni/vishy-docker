@@ -1,6 +1,4 @@
 FROM theborakompanioni/vishy:master
-# local development maven docker image
-#FROM tbk/vishy-server-web
 MAINTAINER Thebora Kompanioni
 
 COPY ./application.yml application.yml
