@@ -8,6 +8,7 @@ a simple openmrc demo application
 - [influxdb](https://www.influxdata.com/time-series-platform/influxdb/)
 - [kafka](https://kafka.apache.org/)
 - [zookeeper](https://zookeeper.apache.org/)
+- [spring-boot-admin](https://github.com/codecentric/spring-boot-admin)
 
 # getting started
 ```
@@ -27,3 +28,9 @@ a simple openmrc demo application
 
 ## ui
 - vishy-ui: [http://localhost:8080/](http://localhost:8080/)
+- vishy-admin: [http://localhost:8080/](http://localhost:8090/)
+
+
+![vishy](https://raw.githubusercontent.com/theborakompanioni/vishy-docker/master/assets/vishy-screenshot.png)
+![admin](https://raw.githubusercontent.com/theborakompanioni/vishy-docker/master/assets/admin-screenshot.png)
+![grafana](https://raw.githubusercontent.com/theborakompanioni/vishy-docker/master/assets/grafana-screenshot.png)
