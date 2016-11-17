@@ -42,7 +42,7 @@ services:
       INFLUXDB_PASS: "root"
       KAFKA_HOST: "kafka"
       KAFKA_PORT: "9092"
-      POSTGRES_URL: jdbc:postgresql://postgres:5432/db
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/dbadmin
       POSTGRES_PASS: mysupersecretpassword
       POSTGRES_USER: dbadmin
 

@@ -42,13 +42,14 @@ vishy.influxdb:
   skip-idle-metrics: true
   interval-in-seconds: 10
 
+# enable when table is pre-created
 vishy.jdbc:
   enabled: false
   jdbcUrl: ${POSTGRES_URL}
   username: ${POSTGRES_USER}
   password: ${POSTGRES_PASS}
   driverClassName: org.postgresql.Driver
-  tableName: vishy_openmrc_request_test_table
+  tableName: vishy_openmrc_request_table_test
 
 vishy.segmentio:
   enabled: false
