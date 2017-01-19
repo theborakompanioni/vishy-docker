@@ -24,15 +24,34 @@ logging.file: application.log
 logging.config: classpath:logback.xml
 logging.level.org.springframework: INFO
 
-vishy.metrics:
+
+
+vishy.model.jdbc:
+  enabled: true
+  jdbcUrl: ${POSTGRES_URL}
+  username: ${POSTGRES_USER}
+  password: ${POSTGRES_PASS}
+  driverClassName: org.postgresql.Driver
+  tableSetupEnabled: true
+
+vishy.js.analytics:
+  enabled: true
+  protocol: http
+  host: localhost
+  port: ${server.port}
+  scriptSrc: static/vishy-analytics/dist/vishy-analytics.min.js
+
+
+vishy.consumer.metrics:
   enabled: true
   console: true
+  interval-in-seconds: 300
 
-vishy.kafka:
+vishy.consumer.kafka:
   enabled: true
   brokers: ${KAFKA_HOST}:${KAFKA_PORT}
 
-vishy.influxdb:
+vishy.consumer.influxdb:
   enabled: true
   host: ${INFLUXDB_HOST}
   port: ${INFLUXDB_PORT}
@@ -42,20 +61,20 @@ vishy.influxdb:
   skip-idle-metrics: true
   interval-in-seconds: 10
 
-# enable when table is pre-created
-vishy.jdbc:
-  enabled: false
+vishy.consumer.jdbc:
+  enabled: true
   jdbcUrl: ${POSTGRES_URL}
   username: ${POSTGRES_USER}
   password: ${POSTGRES_PASS}
   driverClassName: org.postgresql.Driver
   tableName: vishy_openmrc_request_table_test
+  tableSetupEnabled: true
 
-vishy.segmentio:
+vishy.consumer.segmentio:
   enabled: false
   write-key: my_segmentio_write_key
 
-vishy.keenio:
+vishy.consumer.keenio:
   enabled: false
   project-id: my_keenio_project_id
   read-key: my_keenio_read_key
